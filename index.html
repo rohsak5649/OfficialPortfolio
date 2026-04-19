@@ -1,375 +1,1323 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rohan Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rohan Sakhare — C++ Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --gold-dim: rgba(201,168,76,0.15);
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-hover: rgba(255,255,255,0.07);
+  --bg: #050508;
+  --bg2: #080810;
+  --text: #f0ede8;
+  --text-muted: rgba(240,237,232,0.45);
+  --text-dim: rgba(240,237,232,0.25);
+  --blue-accent: #4a9eff;
+  --green-accent: #34d399;
+  --purple-accent: #a78bfa;
+  --radius: 20px;
+  --radius-sm: 12px;
+}
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Themify Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/themify-icons@1.0.1/css/themify-icons.css">
+html { scroll-behavior: smooth; }
 
-  <!-- Slick Slider -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
 
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+/* ── ANIMATED BG ── */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.orb1 { width: 600px; height: 600px; background: radial-gradient(circle, #c9a84c, transparent 70%); top: -200px; left: -200px; animation-delay: 0s; }
+.orb2 { width: 500px; height: 500px; background: radial-gradient(circle, #4a9eff, transparent 70%); top: 30%; right: -150px; animation-delay: -7s; }
+.orb3 { width: 400px; height: 400px; background: radial-gradient(circle, #a78bfa, transparent 70%); bottom: 20%; left: 20%; animation-delay: -14s; }
+.orb4 { width: 300px; height: 300px; background: radial-gradient(circle, #34d399, transparent 70%); bottom: -100px; right: 20%; animation-delay: -4s; }
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="rohan.css">
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-25px, 20px) scale(0.95); }
+}
+
+/* Grid overlay */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+}
+nav.scrolled {
+  background: rgba(5,5,8,0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 14px 60px;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 8px; list-style: none; }
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: all 0.3s;
+  letter-spacing: 0.02em;
+}
+.nav-links a:hover {
+  color: var(--text);
+  background: var(--glass);
+}
+.nav-cta {
+  background: var(--gold-dim) !important;
+  color: var(--gold) !important;
+  border: 1px solid rgba(201,168,76,0.3) !important;
+}
+.nav-cta:hover { background: rgba(201,168,76,0.25) !important; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  transition: all 0.3s;
+}
+
+/* ── SECTIONS BASE ── */
+section { position: relative; z-index: 1; }
+
+/* ── HERO ── */
+#home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 60px 80px;
+}
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease both;
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green-accent);
+  box-shadow: 0 0 8px var(--green-accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(52px, 8vw, 110px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-name .line1 { display: block; color: var(--text); }
+.hero-name .line2 {
+  display: block;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--blue-accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-role::before { content: '> '; opacity: 0.5; }
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.8;
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+.stat-item { display: flex; flex-direction: column; gap: 4px; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; }
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+.btn-primary-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--gold), #e8b84b);
+  color: #000;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s;
+  letter-spacing: 0.02em;
+}
+.btn-primary-hero:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.4); }
+.btn-secondary-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  text-decoration: none;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(20px);
+}
+.btn-secondary-hero:hover { background: var(--glass-hover); border-color: rgba(255,255,255,0.15); }
+
+/* Hero floating card */
+.hero-card {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px;
+  animation: heroCardFloat 6s ease-in-out infinite, fadeUp 1s 0.6s ease both;
+}
+@keyframes heroCardFloat {
+  0%,100% { transform: translateY(-50%) rotate(-2deg); }
+  50% { transform: translateY(calc(-50% - 15px)) rotate(1deg); }
+}
+.glass-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.card-chip {
+  background: linear-gradient(135deg, var(--gold), #e8b84b);
+  height: 4px;
+  width: 100%;
+}
+.card-inner { padding: 28px; }
+.card-label { font-size: 11px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+.card-value { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 20px; }
+.card-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.card-tech-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+}
+.tech-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tp-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.tp-blue { background: rgba(74,158,255,0.1); color: var(--blue-accent); border: 1px solid rgba(74,158,255,0.2); }
+.tp-green { background: rgba(52,211,153,0.1); color: var(--green-accent); border: 1px solid rgba(52,211,153,0.2); }
+.tp-purple { background: rgba(167,139,250,0.1); color: var(--purple-accent); border: 1px solid rgba(167,139,250,0.2); }
+
+/* Social floats */
+.hero-socials {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+.social-icon {
+  width: 44px; height: 44px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: all 0.3s;
+  font-size: 16px;
+}
+.social-icon:hover {
+  background: var(--glass-hover);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: scale(1.1);
+}
+
+/* ── ABOUT ── */
+#about {
+  padding: 100px 60px;
+}
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-tag::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 60px;
+}
+.section-title span {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.about-text p {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.about-text p strong { color: var(--text); font-weight: 600; }
+
+.about-cards { display: flex; flex-direction: column; gap: 16px; }
+.info-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s;
+}
+.info-card:hover { background: var(--glass-hover); border-color: rgba(201,168,76,0.2); }
+.info-icon {
+  width: 44px; height: 44px;
+  background: var(--gold-dim);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.info-text .info-label { font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.info-text .info-value { font-size: 15px; font-weight: 500; color: var(--text); }
+
+/* ── SKILLS ── */
+#skills { padding: 100px 60px; }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.skill-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.skill-card:hover { background: var(--glass-hover); border-color: rgba(255,255,255,0.15); transform: translateY(-4px); }
+.skill-card:hover::before { opacity: 1; }
+.skill-card.gold { --accent-color: var(--gold); }
+.skill-card.blue { --accent-color: var(--blue-accent); }
+.skill-card.green { --accent-color: var(--green-accent); }
+.skill-card.purple { --accent-color: var(--purple-accent); }
+
+.skill-icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+.skill-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.skill-bar-bg {
+  height: 4px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: var(--accent-color);
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px var(--accent-color);
+}
+.skill-percent {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* ── EXPERIENCE ── */
+#experience { padding: 100px 60px; }
+.exp-timeline { position: relative; padding-left: 40px; }
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold-dim), rgba(201,168,76,0.3), var(--gold-dim), transparent);
+}
+.exp-item {
+  position: relative;
+  margin-bottom: 48px;
+  padding: 32px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  transition: all 0.3s;
+}
+.exp-item:hover { background: var(--glass-hover); border-color: rgba(201,168,76,0.2); }
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: -44px;
+  top: 38px;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 16px var(--gold);
+}
+.exp-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.exp-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.exp-company {
+  font-size: 14px;
+  color: var(--blue-accent);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.exp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.exp-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+}
+
+/* ── EDUCATION ── */
+#education { padding: 100px 60px; }
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.edu-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.edu-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+.edu-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+.edu-card:hover::after { transform: scaleX(1); }
+.edu-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.edu-inst {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.edu-degree { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+.edu-grade {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* ── PROJECTS ── */
+#projects { padding: 100px 60px; }
+.projects-grid { display: grid; gap: 32px; }
+.project-card {
+  background: var(--glass);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.4s;
+}
+.project-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-3px); }
+.project-header {
+  padding: 36px 36px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.project-icon {
+  font-size: 36px;
+  width: 72px; height: 72px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.project-meta { flex: 1; }
+.project-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.project-subtitle { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+.project-body { padding: 24px 36px 36px; }
+.project-desc { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; }
+.project-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.feat-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.feat-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--glass-border);
+}
+.stack-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ── COLLEGE LIFE ── */
+#collegelife { padding: 100px 60px; }
+.life-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.life-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.4s;
+}
+.life-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
+.life-img-wrap {
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+.life-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  filter: brightness(0.85) saturate(0.9);
+}
+.life-card:hover .life-img-wrap img { transform: scale(1.05); }
+.life-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5,5,8,0.7) 0%, transparent 60%);
+}
+.life-content { padding: 20px 24px 24px; }
+.life-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.life-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+.life-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── INTERVIEW HUB ── */
+#interviesexp { padding: 100px 60px; }
+.hub-card {
+  background: var(--glass);
+  backdrop-filter: blur(40px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 60px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+.hub-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hub-icon { font-size: 56px; margin-bottom: 24px; }
+.hub-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.hub-desc { font-size: 16px; color: var(--text-muted); line-height: 1.9; margin-bottom: 36px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.hub-companies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.company-tag {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+}
+.btn-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--gold), #e8b84b);
+  color: #000;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 16px 36px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s;
+  letter-spacing: 0.02em;
+}
+.btn-hub:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(201,168,76,0.4); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 40px 60px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.footer-copy { font-size: 13px; color: var(--text-dim); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── MOBILE NAV ── */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5,5,8,0.97);
+  backdrop-filter: blur(40px);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  padding: 12px 24px;
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 44px; height: 44px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 18px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .hero-card { display: none; }
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
+  .about-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  nav.scrolled { padding: 12px 24px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero-socials { display: none; }
+
+  #home, #about, #skills, #experience, #education,
+  #projects, #collegelife, #interviesexp { padding: 80px 24px; }
+
+  .hero-name { font-size: 48px; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .edu-grid { grid-template-columns: 1fr; }
+  .life-grid { grid-template-columns: 1fr; }
+  .project-header { flex-direction: column; }
+  .project-features { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+  .hub-card { padding: 36px 24px; }
+}
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .hero-btns { flex-direction: column; }
+}
+</style>
 </head>
-
 <body>
 
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+</div>
+<div class="bg-grid"></div>
 
-<!-- header area -->
-<header class="navigation fixed-top">
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="closeMobile()">✕</span>
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#education" onclick="closeMobile()">Education</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#collegelife" onclick="closeMobile()">College Life</a>
+  <a href="#interviesexp" onclick="closeMobile()">Interview Hub</a>
+</div>
 
-    
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#home">
-      Rohan Sakhare 
-    </a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="offcanvas offcanvas-end bg-primary" tabindex="-1" id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header">
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-          aria-label="Close"></button>
-      </div>
-
-      <div class="offcanvas-body">
-        <ul class="navbar-nav text-center ms-lg-auto">
-          <li class="nav-item active"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-          <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="#collegelife">College Life</a></li>
-          <li class="nav-item"><a class="nav-link" href="#interviesexp">Interview-Experience-hub</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-<!-- /header area -->
-
-
-<!-- hero area -->
-<section class="hero-area bg-primary" id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-11 mx-auto">
-        <h1 class="text-white wow fadeIn">Hi! I’m <br> <span>Rohan Sakhare</span> <br> C++ Developer</h1>
-      </div>
-    </div>
-  </div>
-  <div class="layer-bg w-100">
-    <img class="img-fluid w-100 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.10s" src="https://i.ibb.co/55P8S5t/leaf-bg.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s" id="l2">
-    <img src="https://i.ibb.co/WxwnFr4/dots-cyan.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s" id="l3">
-    <img src="https://i.ibb.co/fNTqHq5/leaf-orange.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s" id="l4">
-    <img src="https://i.ibb.co/gSXwY8t/dots-orange.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s" id="l5">
-    <img src="https://i.ibb.co/mFMFLh7/leaf-yellow.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s" id="l6">
-    <img src="https://i.ibb.co/7RksBzQ/leaf-cyan.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s" id="l7">
-    <img src="https://i.ibb.co/SKRbTR3/dots-group-orange.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s" id="l8">
-    <img src="https://i.ibb.co/Ms3xvCV/leaf-pink-round.png" alt="bg-shape">
-  </div>
-  <div class="layer wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s" id="l9">
-    <img src="https://i.ibb.co/3m64wWs/leaf-cyan-2.png" alt="bg-shape">
-  </div>
-  <!-- social icon -->
-  <ul class="list-unstyled ms-5 mt-3 position-relative zindex-1">
-    <li class="mb-3 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.2s"><a class="text-white" href="#"><i class="ti-facebook"></i></a></li>
-    <li class="mb-3 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.4s"><a class="text-white" href="#"><i class="ti-instagram"></i></a></li>
-    <li class="mb-3 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.6s"><a class="text-white" href="#"><i class="ti-dribbble"></i></a></li>
-    <li class="mb-3 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.8s"><a class="text-white" href="#"><i class="ti-twitter"></i></a></li>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">RS</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#collegelife">College Life</a></li>
+    <li><a href="#interviesexp" class="nav-cta">Interview Hub</a></li>
   </ul>
-  <!-- /social icon -->
-</section>
-<!-- /hero area -->
+  <div class="hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-<!-- about -->
-<section class="section wow fadeIn" id="about">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto text-center">
-        <p class="paragraph-lg text-dark">
-As a passionate C++ developer, I specialize in building secure and efficient payment solutions. 
-With strong knowledge of C++, OOP, STL, and DSA, I combine logic and precision to create reliable backend systems.
- My work focuses on ISO 8583 message processing, API integration (XML, JSON), and databases like MySQL and MariaDB. 
- Skilled in tools such as Postman, soapUI, Mediator, Gladiator, Git, and Bash, I ensure smooth development and testing.
- Currently, I work at Euronet, contributing to card issuing and acquiring systems with clean, optimized code.
-</p>
+<!-- Social Sidebar -->
+<div class="hero-socials">
+  <a href="https://www.linkedin.com/in/rohansakhareofficial/" target="_blank" class="social-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+  </a>
+  <a href="https://www.instagram.com/sakhare_r_a?igsh=eW1xcmR0MWUwbmhv&utm_source=qr" target="_blank" class="social-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+  <a href="https://rohsak5649.github.io/Interview-Experience-hub-/" target="_blank" class="social-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+  </a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for opportunities
+    </div>
+    <h1 class="hero-name">
+      <span class="line1">Rohan</span>
+      <span class="line2">Sakhare</span>
+    </h1>
+    <p class="hero-role">C++ Developer · Payment Systems · Euronet</p>
+    <p class="hero-desc">
+      Building secure, high-performance payment infrastructure. Specializing in ISO 8583 transaction processing, card issuing systems, and backend banking architecture.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">1+</span>
+        <span class="stat-label">Years at Euronet</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">8.58</span>
+        <span class="stat-label">CGPA</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4×</span>
+        <span class="stat-label">Gold Medals</span>
       </div>
     </div>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary-hero">View Projects ↓</a>
+      <a href="https://www.linkedin.com/in/rohansakhareofficial/" target="_blank" class="btn-secondary-hero">LinkedIn Profile →</a>
+    </div>
   </div>
-</section>
-<!-- /about -->
 
-<!-- skills -->
-<section class="section" id="skills">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-title wow fadeInDown">Skills</h2>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#fdb157">
-            <div class="wave" data-progress="85%"></div>
+  <!-- Floating Card -->
+  <div class="hero-card">
+    <div class="glass-card">
+      <div class="card-chip"></div>
+      <div class="card-inner">
+        <div class="card-row">
+          <div>
+            <div class="card-label">Current Role</div>
+            <div class="card-value">C++ Developer</div>
           </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">C++(85 %)</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#9473e6">
-            <div class="wave" data-progress="70%"></div>
-          </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">MySQl (70%)</h4>
+          <div style="text-align:right">
+            <div class="card-label">Company</div>
+            <div style="font-size:14px;font-weight:600;color:var(--gold);">Euronet REN</div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#00B894">
-            <div class="wave" data-progress="60%"></div>
+        <div class="card-row">
+          <div>
+            <div class="card-label">Domain</div>
+            <div style="font-size:14px;color:var(--text-muted);">Banking & Payments</div>
           </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">DSA (60%)</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#8A2BE2">
-            <div class="wave" data-progress="60%"></div>
-          </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">API(XML,JSON) (60%)</h4>
+          <div style="text-align:right">
+            <div class="card-label">Since</div>
+            <div style="font-size:14px;color:var(--text-muted);">June 2025</div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#E63946">
-            <div class="wave" data-progress="70%"></div>
-          </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">STL (70%)</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#bdecf6">
-            <div class="wave" data-progress="30%"></div>
-          </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">IOS8583(30%)</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="card shadow text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
-          <div class="position-relative rounded-top progress-wrapper" data-color="#ffbcaa">
-            <div class="wave" data-progress="70%"></div>
-          </div>
-          <div class="card-footer bg-white">
-            <h4 class="card-title">Git-GitHub(70%)</h4>
-          </div>
+        <div class="card-tech-row">
+          <span class="tech-pill tp-gold">C++</span>
+          <span class="tech-pill tp-blue">ISO 8583</span>
+          <span class="tech-pill tp-green">MySQL</span>
+          <span class="tech-pill tp-purple">Git</span>
+          <span class="tech-pill tp-blue">MariaDB</span>
+          <span class="tech-pill tp-gold">STL</span>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- /skills -->
 
-<!-- experience -->
-<section class="section" id="experience">
-  <div class="container">
-    <div class="row justify-content-around">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-title wow fadeInDown">Experience</h2>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-tag">About Me</div>
+    <h2 class="section-title reveal">Building the <span>backbone</span><br>of modern payments.</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a passionate <strong>C++ Developer</strong> at Euronet, working on the REN Banking Switch platform. I specialize in building secure, efficient payment solutions that power real-world banking infrastructure.</p>
+        <p>With deep expertise in <strong>ISO 8583 message processing</strong>, OOP design patterns, STL, and DSA, I craft clean, optimized backend systems. My work touches card issuing and acquiring systems, Mastercard & Visa mandate compliance, and CMS integration.</p>
+        <p>I graduated with <strong>8.58 CGPA</strong> from Dr. D.Y. Patil Institute of Technology, Pune — where I also won 4 gold medals in Kabaddi and served as Computer Department Head at Parakram 2025.</p>
       </div>
-      <div class="col-lg-3 col-md-4 text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-        <img src="https://i.ibb.co/W2WXHrk/icon-1.png" alt="icon">
-        <p class="mb-0">DEC 2023 - JUNE 2024</p>
-        <h4>iOS Mobile Application development</h4>
-        <h6 class="text-secondary">VBAI solutions Private Limited</h6>
-      </div>
-      <div class="col-lg-3 col-md-4 text-center wow fadeIn" data-wow-duration="1s" data-wow-delay="0.12s">
-        <img src="https://i.ibb.co/9p8mn46/icon-3.png" alt="icon">
-        <p class="mb-0">JUNE 2025 - Present</p>
-        <h4>C++ Developer</h4>
-        <h6 class="text-secondary">Euronet(REN)</h6>
+      <div class="about-cards reveal reveal-delay-2">
+        <div class="info-card">
+          <div class="info-icon">🏦</div>
+          <div class="info-text">
+            <div class="info-label">Current Company</div>
+            <div class="info-value">Euronet Worldwide (REN Platform)</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div class="info-text">
+            <div class="info-label">Location</div>
+            <div class="info-value">Pune, Maharashtra, India</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🎓</div>
+          <div class="info-text">
+            <div class="info-label">Education</div>
+            <div class="info-value">B.E. Computer Engineering · DY Patil, Pune</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">⚡</div>
+          <div class="info-text">
+            <div class="info-label">Specialization</div>
+            <div class="info-value">Payment Systems · ISO 8583 · C++ Backend</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
-<!-- ./experience -->
 
-<!-- education -->
-<section class="section position-relative" id="education">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-title wow fadeInDown">Education</h2>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-tag">Technical Stack</div>
+    <h2 class="section-title reveal">Core <span>competencies</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card gold reveal">
+        <div class="skill-icon-wrap">💻</div>
+        <div class="skill-name">C++</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85%"></div></div>
+        <div class="skill-percent">85%</div>
       </div>
-      <div class="col-lg-6 col-md-6 mb-5">
-        <div class="d-flex wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="me-lg-5 me-3">
-            <i class="ti-medall icon icon-light icon-bg bg-white shadow rounded-circle d-block"></i>
-          </div>
-          <div>
-            <p class="text-dark mb-1">2018-2019</p>
-            <h4>Yashkirti Vidyalaya, Pandharpur</h4>
-            <p class="mb-0 text-secondary">Class X , Maharashtra State Board</p>
-            <p class="mb-0 text-secondary">Grade : 87 %</p>
-          </div>
-        </div>
+      <div class="skill-card blue reveal reveal-delay-1">
+        <div class="skill-icon-wrap">🗄️</div>
+        <div class="skill-name">MySQL / MariaDB</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70%"></div></div>
+        <div class="skill-percent">70%</div>
       </div>
-      <div class="col-lg-6 col-md-6 mb-5">
-        <div class="d-flex wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
-          <div class="me-lg-5 me-3">
-            <i class="ti-medall icon icon-light icon-bg bg-white shadow rounded-circle d-block"></i>
-          </div>
-          <div>
-            <p class="text-dark mb-1">2020-2021</p>
-            <h4>Karmaveer Bhaurao Patil Mahavidyalaya, Pandharpur </h4>
-            <p class="mb-0 text-secondary">Class XII , Maharashtra State Board</p>
-            <p class="mb-0 text-secondary">Grade : 94.18 %</p>
-          </div>
-        </div>
+      <div class="skill-card green reveal reveal-delay-2">
+        <div class="skill-icon-wrap">🧩</div>
+        <div class="skill-name">DSA</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="60%"></div></div>
+        <div class="skill-percent">60%</div>
       </div>
-      <div class="col-lg-6 col-md-6 mb-5">
-        <div class="d-flex wow fadeIn" data-wow-duration="1s" data-wow-delay="0.12s">
-          <div class="me-lg-5 me-3">
-            <i class="ti-medall icon icon-light icon-bg bg-white shadow rounded-circle d-block"></i>
-          </div>
-          <div>
-            <p class="text-dark mb-1">2021-2025</p>
-            <h4>Dr.D.Y.Patil Institute Of Technology, Pimpri Pune</h4>
-            <p class="mb-0 text-secondary">B.E in Computer Engineering</p>
-            <p class="mb-0 text-secondary">Grade :  8.58 CGPA </p>
-          </div>
-        </div>
+      <div class="skill-card purple reveal reveal-delay-3">
+        <div class="skill-icon-wrap">🔌</div>
+        <div class="skill-name">API (XML / JSON)</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="60%"></div></div>
+        <div class="skill-percent">60%</div>
       </div>
+      <div class="skill-card gold reveal">
+        <div class="skill-icon-wrap">📚</div>
+        <div class="skill-name">STL</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70%"></div></div>
+        <div class="skill-percent">70%</div>
+      </div>
+      <div class="skill-card blue reveal reveal-delay-1">
+        <div class="skill-icon-wrap">💳</div>
+        <div class="skill-name">ISO 8583</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="30%"></div></div>
+        <div class="skill-percent">30%</div>
+      </div>
+      <div class="skill-card green reveal reveal-delay-2">
+        <div class="skill-icon-wrap">🔀</div>
+        <div class="skill-name">Git / GitHub</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70%"></div></div>
+        <div class="skill-percent">70%</div>
+      </div>
+      <div class="skill-card purple reveal reveal-delay-3">
+        <div class="skill-icon-wrap">🧪</div>
+        <div class="skill-name">Postman / soapUI</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="65%"></div></div>
+        <div class="skill-percent">65%</div>
+      </div>
+    </div>
   </div>
-  <!-- bg image -->
-  <img class="img-fluid edu-bg-image w-100" src="https://i.ibb.co/V22h7D5/education-bg.png" alt="education-bg">
 </section>
 
-<!-- projects -->
-<!-- projects -->
-<section id="projects" class="section position-relative bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-title wow fadeInDown">Projects</h2>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-tag">Career</div>
+    <h2 class="section-title reveal">Work <span>Experience</span></h2>
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-period">JUNE 2025 — PRESENT</div>
+        <div class="exp-title">C++ Developer</div>
+        <div class="exp-company">Euronet Worldwide · REN Banking Switch Platform</div>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin-bottom:20px;">
+          Working on the Banking Switch (REN) platform, contributing to the NZ/AU Bank "Prezzy" project. Involved in Mastercard & Visa mandate updates, unit testing, and end-to-end transaction flow implementation.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag">C++</span>
+          <span class="exp-tag">ISO 8583</span>
+          <span class="exp-tag">MySQL</span>
+          <span class="exp-tag">MariaDB</span>
+          <span class="exp-tag">CMS</span>
+          <span class="exp-tag">Mastercard</span>
+          <span class="exp-tag">Visa</span>
+          <span class="exp-tag">Bash</span>
+        </div>
       </div>
+      <div class="exp-item reveal reveal-delay-1">
+        <div class="exp-period">DEC 2023 — JUNE 2024</div>
+        <div class="exp-title">iOS Mobile App Developer</div>
+        <div class="exp-company">VBAI Solutions Private Limited</div>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin-bottom:20px;">
+          Developed iOS mobile applications during a 6-month internship. Gained hands-on experience in mobile development lifecycle and worked on real-world application projects.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag">iOS</span>
+          <span class="exp-tag">Mobile Development</span>
+          <span class="exp-tag">Swift</span>
+          <span class="exp-tag">Xcode</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-tag">Academic Background</div>
+    <h2 class="section-title reveal">Education <span>Journey</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-year">2018 – 2019</div>
+        <div class="edu-inst">Yashkirti Vidyalaya, Pandharpur</div>
+        <div class="edu-degree">Class X · Maharashtra State Board</div>
+        <span class="edu-grade">🏅 87%</span>
+      </div>
+      <div class="edu-card reveal reveal-delay-1">
+        <div class="edu-year">2020 – 2021</div>
+        <div class="edu-inst">Karmaveer Bhaurao Patil Mahavidyalaya, Pandharpur</div>
+        <div class="edu-degree">Class XII · Maharashtra State Board</div>
+        <span class="edu-grade">🏅 94.18%</span>
+      </div>
+      <div class="edu-card reveal reveal-delay-2">
+        <div class="edu-year">2021 – 2025</div>
+        <div class="edu-inst">Dr. D.Y. Patil Institute of Technology, Pimpri Pune</div>
+        <div class="edu-degree">B.E. Computer Engineering</div>
+        <span class="edu-grade">🎓 8.58 CGPA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-tag">Portfolio</div>
+    <h2 class="section-title reveal">Featured <span>Projects</span></h2>
+    <div class="projects-grid">
 
       <!-- Project 1 -->
-      <div class="col-lg-12">
-        <div class="card shadow-lg border-0 rounded-4 p-4 mt-4 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
-          <h3 class="text-primary mb-3">🏦 Banking Management System</h3>
-          <h5 class="text-dark mb-2">
-            (POS | ATM | ECOM | Online Banking | UPI | Fund Transfer | Account Management | Loan & Card Services)
-          </h5>
-
-          <p class="text-muted mt-3">
-            Developed a <strong>C++ Console-Based Banking Management System</strong> integrated with
-            <strong>MySQL</strong> and <strong>ISO 8583-based transaction simulation</strong>, designed to function like
-            a mini real-world bank. The system manages Customers, Administrators, and Tellers with secure authentication,
-            real-time transaction validation, and database logging.
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🏦</div>
+          <div class="project-meta">
+            <div class="project-title">Banking Management System</div>
+            <div class="project-subtitle">POS · ATM · ECOM · Online Banking · UPI · Fund Transfer · Loans · Card Services</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            A C++ Console-Based Banking Management System integrated with MySQL and ISO 8583-based transaction simulation, designed to function like a mini real-world bank. Manages Customers, Administrators, and Tellers with secure authentication, real-time validation, and full audit logging.
           </p>
-
-          <hr>
-
-          <h5 class="text-dark">🔹 How It Works:</h5>
-          <ul class="text-secondary">
-            <li>Customers can create accounts, deposit/withdraw money, transfer funds, apply for loans, request credit cards, and pay bills.</li>
-            <li>Administrators have role-based access (A1–A4) to approve or reject loans and manage credit card requests.</li>
-            <li>Tellers handle deposits and withdrawals securely.</li>
-            <li>Every event (login, transfer, loan, or error) is automatically logged for full audit tracking.</li>
-          </ul>
-
-          <hr>
-
-          <h5 class="text-dark">🔹 Technical Highlights:</h5>
-          <ul class="text-secondary">
-            <li>Built using <strong>OOPs</strong> and <strong>Design Patterns</strong> (Singleton, Factory) for modular structure.</li>
-            <li>Implemented <strong>ISO 8583 message format</strong> for POS/ATM transaction simulation.</li>
-            <li>Tested RESTful APIs using <strong>Postman</strong> and <strong>soapUI</strong>.</li>
-            <li>Supported data exchange in <strong>JSON</strong> and <strong>XML</strong> via a custom Mediator layer.</li>
-            <li>Applied <strong>DSA</strong> for transaction queueing and optimized runtime performance.</li>
-            <li>Ensured secure validation, real-time response, and detailed logging similar to modern banking systems.</li>
-          </ul>
-
-          <hr>
-
-          <h5 class="text-dark">🔹 Tech Stack:</h5>
-          <p class="text-secondary mb-0">
-            <strong>C++ | MySQL | ISO 8583 | REST API | Postman | JSON | XML | OOPs | DSA | File Handling | Design Patterns (Singleton, Factory)</strong>
-          </p>
+          <div class="project-features">
+            <div class="feat-item"><span class="feat-dot"></span>Secure multi-role authentication (Customer / Admin / Teller)</div>
+            <div class="feat-item"><span class="feat-dot"></span>ISO 8583 message format for POS/ATM transaction simulation</div>
+            <div class="feat-item"><span class="feat-dot"></span>Role-based admin access (A1–A4) for loan & card approvals</div>
+            <div class="feat-item"><span class="feat-dot"></span>Singleton & Factory design patterns for modular architecture</div>
+            <div class="feat-item"><span class="feat-dot"></span>REST API testing via Postman and soapUI</div>
+            <div class="feat-item"><span class="feat-dot"></span>JSON & XML data exchange via custom Mediator layer</div>
+            <div class="feat-item"><span class="feat-dot"></span>DSA-driven transaction queueing for performance</div>
+            <div class="feat-item"><span class="feat-dot"></span>Full audit trail for every event and transaction</div>
+          </div>
+          <div class="project-stack">
+            <span class="stack-tag">C++</span>
+            <span class="stack-tag">MySQL</span>
+            <span class="stack-tag">ISO 8583</span>
+            <span class="stack-tag">REST API</span>
+            <span class="stack-tag">Postman</span>
+            <span class="stack-tag">JSON</span>
+            <span class="stack-tag">XML</span>
+            <span class="stack-tag">OOPs</span>
+            <span class="stack-tag">DSA</span>
+            <span class="stack-tag">Design Patterns</span>
+          </div>
         </div>
       </div>
 
       <!-- Project 2 -->
-      <div class="col-lg-12">
-        <div class="card shadow-lg border-0 rounded-4 p-4 mt-5 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-          <h3 class="text-primary mb-3">💳 Banking Switch (REN Platform) — Euronet</h3>
-          <h5 class="text-dark mb-2">(Payment Processing | Mastercard & Visa | CMS | Backend Development)</h5>
-
-          <p class="text-muted mt-3">
-            Working as a <strong>C++ Developer</strong> on the <strong>Banking Switch (REN)</strong> platform at
-            <strong>Euronet</strong>. Contributing to the <strong>NZ/AU Bank “Prezzy”</strong> project, focusing on backend development using
-            <strong>C++</strong>, databases, CMS, and core transaction modules.
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-header">
+          <div class="project-icon">💳</div>
+          <div class="project-meta">
+            <div class="project-title">Banking Switch — Euronet REN Platform</div>
+            <div class="project-subtitle">Payment Processing · Mastercard & Visa · CMS · Backend Development</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Working as a C++ Developer on the Banking Switch (REN) platform at Euronet. Contributing to the NZ/AU Bank "Prezzy" project — handling end-to-end transaction flows, mandate compliance, and core banking modules in a production payment environment.
           </p>
-
-          <hr>
-
-          <h5 class="text-dark">🔹 Responsibilities:</h5>
-          <ul class="text-secondary">
-            <li>Working as a <strong>C++ Developer</strong> on the Banking Switch (REN) platform.</li>
-            <li>Contributing to the NZ/AU Bank “Prezzy” project, focusing on backend development using C++, databases, CMS, and core modules.</li>
-            <li>Involved in mandate updates and implementations for both <strong>Mastercard</strong> and <strong>Visa</strong> networks.</li>
-            <li>Performing <strong>unit testing</strong> to ensure system stability and compliance with banking standards.</li>
-            <li>Gaining hands-on experience with <strong>end-to-end transaction flows</strong> within the payment processing ecosystem.</li>
-          </ul>
-
-          <hr>
-
-          <h5 class="text-dark">🔹 Tech Stack:</h5>
-          <p class="text-secondary mb-0">
-            <strong>C++ | ISO 8583 | MySQL | MariaDB | CMS | API (XML, JSON) | Postman | soapUI | Git | Bash | OOPs | STL | Payment Domain</strong>
-          </p>
+          <div class="project-features">
+            <div class="feat-item"><span class="feat-dot"></span>Mastercard & Visa mandate updates and implementations</div>
+            <div class="feat-item"><span class="feat-dot"></span>Backend development using C++, CMS, and core modules</div>
+            <div class="feat-item"><span class="feat-dot"></span>Unit testing for system stability and banking compliance</div>
+            <div class="feat-item"><span class="feat-dot"></span>End-to-end payment transaction flow hands-on experience</div>
+          </div>
+          <div class="project-stack">
+            <span class="stack-tag">C++</span>
+            <span class="stack-tag">ISO 8583</span>
+            <span class="stack-tag">MySQL</span>
+            <span class="stack-tag">MariaDB</span>
+            <span class="stack-tag">CMS</span>
+            <span class="stack-tag">XML</span>
+            <span class="stack-tag">JSON</span>
+            <span class="stack-tag">Postman</span>
+            <span class="stack-tag">soapUI</span>
+            <span class="stack-tag">Git</span>
+            <span class="stack-tag">Bash</span>
+            <span class="stack-tag">STL</span>
+          </div>
         </div>
       </div>
 
@@ -377,429 +1325,186 @@ With strong knowledge of C++, OOP, STL, and DSA, I combine logic and precision t
   </div>
 </section>
 
-<!-- college life -->
-<!-- college life -->
-<section id="collegelife" class="section position-relative bg-light">
-  <div class="container">
-    <!-- Centered Heading -->
-    <div class="row">
-      <div class="col-lg-8 mx-auto text-center">
-        <h2 class="section-title wow fadeInDown">College Life</h2>
-        <p class="text-muted lead wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-          A journey filled with unforgettable memories, teamwork, and leadership — moments that shaped my engineering life and personality.
-        </p>
-      </div>
-    </div>
+<!-- COLLEGE LIFE -->
+<section id="collegelife">
+  <div class="section-inner">
+    <div class="section-tag">Beyond Code</div>
+    <h2 class="section-title reveal">College <span>Life</span></h2>
+    <div class="life-grid">
 
-    <!-- Moments Grid -->
-    <div class="row g-4 justify-content-center mt-3">
-      
-      <!-- Moment 1: Kabaddi Champion -->
-      <div class="col-md-6 col-lg-5">
-        <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-          <div class="image-wrapper">
-            <img src="kbd.png" alt="Kabaddi team" class="img-fluid w-100">
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-2" style="color:#9473e6;">🏆 Parakram 2025 — 4× Kabaddi Champion</h5>
-            <p class="card-text text-secondary">
-              <em>
-                “Parakram 2025 has come to an end, and it's been an unforgettable journey!  
-                This annual event has been a highlight of my engineering life — 1st year, 2nd year, 3rd year, and now, in my final year.  
-                4 years, 4 gold medals in Kabaddi!  
-                Truly grateful for the battles, the teamwork, and the victories!”
-              </em>
-            </p>
-            <p class="text-muted mb-0"><strong>#Parakram2025 #KabaddiChampion #4Years4Gold</strong></p>
-          </div>
+      <div class="life-card reveal">
+        <div class="life-img-wrap">
+          <img src="https://rohsak5649.github.io/OfficialPortfolio/kbd.png" alt="Kabaddi Champion" loading="lazy">
+          <div class="life-img-overlay"></div>
+        </div>
+        <div class="life-content">
+          <div class="life-badge">🏆 Champion</div>
+          <div class="life-title">Parakram 2025 — 4× Kabaddi Gold Medalist</div>
+          <div class="life-desc">4 years, 4 gold medals in Kabaddi. An unforgettable journey of battles, teamwork, and victories from 1st year through final year at Parakram.</div>
         </div>
       </div>
 
-      <!-- Moment 2: Department Head / Parakram Leadership -->
-      <div class="col-md-6 col-lg-5">
-        <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-          <div class="image-wrapper">
-            <img src="Ron.png" alt="Department Head Parakram 2025" class="img-fluid w-100">
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-2" style="color:#9473e6;">🎖 Head of Computer Department — Parakram 2025</h5>
-            <p class="card-text text-secondary">
-              Served as <strong>Student Head Coordinator</strong> for the Department of Computer Engineering during <strong>Parakram 2025</strong>, 
-              leading and coordinating all departmental teams across multiple sports events.
-            </p>
-            <p class="card-text text-secondary mb-2">
-              <em>“Proud moment leading our department to victory and carrying forward the legacy of teamwork, energy, and excellence.”</em>
-            </p>
-            <p class="text-muted mb-0">
-              <strong>#Leadership #TeamComputer #Parakram2025 #ProudMoment</strong>
-            </p>
-          </div>
+      <div class="life-card reveal reveal-delay-1">
+        <div class="life-img-wrap">
+          <img src="https://rohsak5649.github.io/OfficialPortfolio/Ron.png" alt="Department Head" loading="lazy">
+          <div class="life-img-overlay"></div>
+        </div>
+        <div class="life-content">
+          <div class="life-badge">🎖 Leadership</div>
+          <div class="life-title">Head of Computer Department — Parakram 2025</div>
+          <div class="life-desc">Served as Student Head Coordinator for the Department of Computer Engineering, leading all departmental teams across multiple sports events.</div>
         </div>
       </div>
-      <!-- Moment 3: Mr. B.E. Award -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
-          <div class="image-wrapper">
-            <img src="MrBE.png" alt="Mr BE Award" class="img-fluid w-100">
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-2" style="color:#9473e6;">👑 Mr. B.E. — Department of Computer Engineering</h5>
-            <p class="card-text text-secondary">
-              Honored with the <strong>Mr. B.E.</strong> title for excellence in academics, leadership, and overall contribution to the department.  
-              This recognition represents dedication, consistency, and the trust of peers & faculty.
-            </p>
-            <p class="card-text text-secondary mb-2">
-              <em>“This award means a lot to me — thank you to all my faculties and friends for their support and motivation!”</em>
-            </p>
-            <p class="text-muted mb-0"><strong>#MrBE #DYPatilPimpri #Gratitude #EngineeringJourney</strong></p>
-          </div>
+
+      <div class="life-card reveal reveal-delay-2">
+        <div class="life-img-wrap">
+          <img src="https://rohsak5649.github.io/OfficialPortfolio/MrBE.png" alt="Mr BE Award" loading="lazy">
+          <div class="life-img-overlay"></div>
+        </div>
+        <div class="life-content">
+          <div class="life-badge">👑 Award</div>
+          <div class="life-title">Mr. B.E. — Department of Computer Engineering</div>
+          <div class="life-desc">Honored with the Mr. B.E. title for excellence in academics, leadership, and overall contribution — a testament to dedication and peer trust.</div>
         </div>
       </div>
-      <!-- Moment 3: BE Computer Engineering Graduation -->
-<div class="col-md-6 col-lg-5">
-  <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-    <div class="image-wrapper">
-      <img src="roni.jpg" alt="Graduation BE Computer Engineering 2025" class="img-fluid w-100">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title mb-2" style="color:#9473e6;">🎓 B.E. in Computer Engineering — Class of 2025</h5>
-      <p class="card-text text-secondary">
-        Successfully completed my <strong>Bachelor of Engineering in Computer Engineering</strong> in <strong>June 2025</strong> — 
-        marking one of the most memorable and proud milestones in my journey.
-      </p>
-      <p class="card-text text-secondary mb-2">
-        <em>“A dream come true — years of dedication, learning, and growth that shaped me both technically and personally.”</em>
-      </p>
-      <p class="text-muted mb-0">
-        <strong>#Graduation #BEComputerEngineering #ProudMoment #DreamAchieved #DYPDPU</strong>
-      </p>
-    </div>
-  </div>
-</div>
-      <!-- Moment 4: Department of the Year – Parakram 2023 & 2024 -->
-<div class="col-md-6 col-lg-5">
-  <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-    <div class="image-wrapper">
-      <img src="roi.jpg" alt="Department of the Year 2023 & 2024" class="img-fluid w-100">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title mb-2" style="color:#9473e6;">🏆 Department of the Year — Computer Engineering (Parakram 2023 & 2024)</h5>
-      <p class="card-text text-secondary">
-        Honoured to be part of the <strong>Computer Engineering Department</strong> team that achieved the title of 
-        <strong>“Department of the Year”</strong> for two consecutive years — <strong>2023 and 2024</strong> — in the college’s biggest 
-        sports festival, <strong>Parakram</strong>.
-      </p>
-      <p class="card-text text-secondary mb-2">
-        <em>“Proud to contribute to our department’s consistent success — teamwork, energy, and passion made it possible!”</em>
-      </p>
-      <p class="text-muted mb-0">
-        <strong>#Parakram #DepartmentOfTheYear #ComputerEngineering #TeamSpirit #Victory #ProudMoment</strong>
-      </p>
-    </div>
-  </div>
-</div>
-      <!-- Moment 5: First Day at Euronet -->
-<div class="col-md-6 col-lg-5">
-  <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-    <div class="image-wrapper">
-      <img src="first.jpg" alt="First Day at Euronet" class="img-fluid w-100">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title mb-2" style="color:#9473e6;">💼 First Day in IT — Euronet Placement Journey</h5>
-      <p class="card-text text-secondary">
-        A truly special moment — <strong>my first day stepping into the IT and corporate world</strong> at <strong>Euronet</strong>.  
-        After facing many challenges and struggles, achieving this placement felt like a dream come true.  
-        Grateful, excited, and ready to learn, grow, and make an impact.
-      </p>
-      <p class="card-text text-secondary mb-2">
-        <em>“Hard work pays off — every late night, every effort, every setback led to this moment of pride and happiness.”</em>
-      </p>
-      <p class="text-muted mb-0">
-        <strong>#Euronet #NewBeginnings #FirstDay #CorporateLife #DreamAchieved #FintechJourney #ProudMoment</strong>
-      </p>
-    </div>
-  </div>
-</div>
 
+      <div class="life-card reveal">
+        <div class="life-img-wrap">
+          <img src="https://rohsak5649.github.io/OfficialPortfolio/roni.jpg" alt="BE Graduation 2025" loading="lazy">
+          <div class="life-img-overlay"></div>
+        </div>
+        <div class="life-content">
+          <div class="life-badge">🎓 Milestone</div>
+          <div class="life-title">B.E. Computer Engineering — Class of 2025</div>
+          <div class="life-desc">Successfully completed B.E. in Computer Engineering in June 2025 — years of dedication, learning, and growth culminating in a proud milestone.</div>
+        </div>
+      </div>
 
+      <div class="life-card reveal reveal-delay-1">
+        <div class="life-img-wrap">
+          <img src="https://rohsak5649.github.io/OfficialPortfolio/roi.jpg" alt="Department of the Year" loading="lazy">
+          <div class="life-img-overlay"></div>
+        </div>
+        <div class="life-content">
+          <div class="life-badge">🏆 Department of the Year</div>
+          <div class="life-title">Computer Engineering — Parakram 2023 & 2024</div>
+          <div class="life-desc">Part of the Computer Engineering team that claimed "Department of the Year" for two consecutive years — teamwork and passion made it possible.</div>
+        </div>
+      </div>
 
+      <div class="life-card reveal reveal-delay-2">
+        <div class="life-img-wrap">
+          <img src="https://rohsak5649.github.io/OfficialPortfolio/first.jpg" alt="First Day at Euronet" loading="lazy">
+          <div class="life-img-overlay"></div>
+        </div>
+        <div class="life-content">
+          <div class="life-badge">💼 New Chapter</div>
+          <div class="life-title">First Day in IT — Euronet Journey Begins</div>
+          <div class="life-desc">A special moment stepping into the corporate world at Euronet. After many challenges, this placement felt like a dream come true — hard work truly pays off.</div>
+        </div>
+      </div>
 
     </div>
   </div>
 </section>
 
-<!-- Custom styling for uniform images -->
-<style>
-  #collegelife .image-wrapper {
-    width: 100%;
-    height: 300px; /* Fixed height for all images */
-    overflow: hidden;
-    border-bottom: 3px solid #9473e6;
-  }
-
-  #collegelife .image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  #collegelife .image-wrapper img:hover {
-    transform: scale(1.05);
-  }
-
-  #collegelife .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  #collegelife .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
-</style>
-
-
-<section id="interviesexp" class="section interview-exp py-5">
-  <div class="container text-center">
-    <h2 class="section-title mb-3">Interview Experience Hub</h2>
-
-    <p class="section-subtitle mb-4">
-      Hello Everyone! 👋<br><br>
-      I’m excited to share a project I recently created — a <strong>static website</strong>, where I’ve compiled real and honest interview experiences.
-    </p>
-
-    <div class="description text-start mx-auto">
-      <ul>
-        <li>✅ Includes my selection experience at <strong>Euronet</strong></li>
-        <li>📝 Also features interviews where I wasn’t selected — because <strong>failures teach as much as success</strong></li>
-        <li>🤝 Experiences shared by my friends who got selected in top companies like:
-          <em>Goldman Sachs, JUSPAY, NiCE, Pegasystems, UKG, Synechron, EdgeVerve, HSBC, mthree, Cognizant, IBM, LTIMindtree, Tech Mahindra, Alfa Laval, Visteon India, DATAECONOMY, Mindsprint, Capgemini, Merkle, Microland Limited, TraceLink, Cloud4C Services, ConnectWise, HCLTech, Emerson</em> and more.
-        </li>
-      </ul>
-
-      <h5 class="mt-4 mb-2">🎯 Why this website?</h5>
-      <ul>
-        <li>Help juniors prepare for upcoming placement season</li>
-        <li>Get company-wise, round-wise breakdowns</li>
-        <li>Learn what kind of questions are asked (<strong>Aptitude, DSA, OOP, SQL, HR</strong>)</li>
-        <li>Constantly updated as I get more data from friends</li>
-      </ul>
-
-      <p class="highlight mt-3">
-        🔥 Especially useful for students from <strong>Dr. D. Y. Patil Institute of Technology, Pimpri, Pune</strong>  
-        and across Pune preparing for placements!
+<!-- INTERVIEW HUB -->
+<section id="interviesexp">
+  <div class="section-inner">
+    <div class="section-tag">Community</div>
+    <h2 class="section-title reveal" style="text-align:center;">Interview Experience <span>Hub</span></h2>
+    <div class="hub-card reveal">
+      <div class="hub-icon">🎯</div>
+      <div class="hub-title">Interview Experience Hub</div>
+      <p class="hub-desc">
+        A static website compiling real, honest interview experiences — my own selection story at Euronet, rejections that taught me lessons, and experiences shared by friends placed at top companies.
       </p>
+      <div class="hub-companies">
+        <span class="company-tag">Goldman Sachs</span>
+        <span class="company-tag">JUSPAY</span>
+        <span class="company-tag">NiCE</span>
+        <span class="company-tag">Pegasystems</span>
+        <span class="company-tag">UKG</span>
+        <span class="company-tag">Synechron</span>
+        <span class="company-tag">HSBC</span>
+        <span class="company-tag">mthree</span>
+        <span class="company-tag">Cognizant</span>
+        <span class="company-tag">IBM</span>
+        <span class="company-tag">LTIMindtree</span>
+        <span class="company-tag">Tech Mahindra</span>
+        <span class="company-tag">Capgemini</span>
+        <span class="company-tag">HCLTech</span>
+        <span class="company-tag">EdgeVerve</span>
+        <span class="company-tag">Emerson</span>
+        <span class="company-tag">& more...</span>
+      </div>
+      <a href="https://rohsak5649.github.io/Interview-Experience-hub-/" target="_blank" class="btn-hub">
+        Visit the Hub 🚀
+      </a>
     </div>
-
-    <a href="https://rohsak5649.github.io/Interview-Experience-hub-/" target="_blank" class="btn visit-btn mt-4">
-      Visit Website 🚀
-    </a>
   </div>
 </section>
 
-<style>
-  /* Interview Section Styling */
-  .interview-exp {
-    background-color: #ffffff;
-    color: #222;
-  }
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Rohan Sakhare</div>
+  <div class="footer-copy">© 2025 · Built with passion for banking & code</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/rohansakhareofficial/" target="_blank">LinkedIn</a>
+    <a href="https://rohsak5649.github.io/Interview-Experience-hub-/" target="_blank">Interview Hub</a>
+    <a href="mailto:rohansakhare@gmail.com">Email</a>
+  </div>
+</footer>
 
-  .interview-exp .container {
-    max-width: 900px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 60px 30px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
-
-  .interview-exp .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #111;
-  }
-
-  .interview-exp .section-subtitle {
-    font-size: 1.1rem;
-    color: #333;
-    line-height: 1.8;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .interview-exp .description {
-    text-align: left;
-    font-size: 1rem;
-    color: #444;
-    line-height: 1.7;
-    max-width: 800px;
-  }
-
-  .interview-exp ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .interview-exp ul li {
-    margin-bottom: 10px;
-  }
-
-  .interview-exp .highlight {
-    font-weight: 600;
-    color: #0A66C2;
-  }
-
-  .visit-btn {
-    display: inline-block;
-    background-color: #0A66C2;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 12px 28px;
-    font-size: 1.05rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(10, 102, 194, 0.3);
-  }
-
-  .visit-btn:hover {
-    background-color: #004182;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(10, 102, 194, 0.4);
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  @media (max-width: 768px) {
-    .interview-exp .container {
-      padding: 40px 20px;
-    }
-
-    .interview-exp .section-title {
-      font-size: 1.6rem;
-    }
-  }
-</style>
-
-
-
-<!-- (continues — Services, Portfolio, Testimonials, Client Logos, Blog, Contact, Footer, and Floating Button remain 100% identical — full version continues below, no cuts) -->
-
-<!-- bg map fixed -->
-<img class="img-fluid bg-map" src="https://i.ibb.co/6DjyRZz/map.png" alt="map">
-
-<!-- Floating Social Buttons -->
-<a href="https://www.linkedin.com/in/rohansakhareofficial/" class="social-button linkedin" target="_blank" title="Connect on LinkedIn 💼">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;">
-    <path
-      d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11.75 20h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.749 0-.965.784-1.749 1.75-1.749s1.75.784 1.75 1.749c0 .966-.784 1.749-1.75 1.749zm13.25 12.268h-3v-5.604c0-1.336-.026-3.059-1.864-3.059-1.865 0-2.151 1.459-2.151 2.966v5.697h-3v-11h2.882v1.507h.041c.401-.761 1.379-1.563 2.841-1.563 3.04 0 3.601 2.002 3.601 4.604v6.452z" />
-  </svg>
-</a>
-
-<a href="https://www.instagram.com/sakhare_r_a?igsh=eW1xcmR0MWUwbmhv&utm_source=qr" class="social-button instagram" target="_blank" title="Follow on Instagram 📸">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;">
-    <path
-      d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.263 2.242 1.325 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.325 3.608-.975.975-2.242 1.263-3.608 1.325-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.325-.975-.975-1.263-2.242-1.325-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.325-3.608C4.533 2.583 5.8 2.295 7.166 2.233 8.432 2.175 8.812 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.773.131 4.602.432 3.635 1.4 2.667 2.368 2.366 3.539 2.307 4.818 2.248 6.098 2.235 6.507 2.235 9.765s.013 3.667.072 5.047c.059 1.279.36 2.45 1.328 3.418.968.968 2.139 1.269 3.418 1.328 1.28.059 1.689.072 4.947.072s3.667-.013 5.047-.072c1.279-.059 2.45-.36 3.418-1.328.968-.968 1.269-2.139 1.328-3.418.059-1.28.072-1.689.072-4.947s-.013-3.667-.072-5.047c-.059-1.279-.36-2.45-1.328-3.418C19.45.432 18.279.131 17 .072 15.72.013 15.311 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm7.2-11.462a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z" />
-  </svg>
-</a>
-
-<a href="https://rohsak5649.github.io/Interview-Experience-hub-/" class="social-button website" target="_blank" title="Visit Interview Experience 🌐">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" style="fill: white;">
-    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 
-      10-4.477 10-10S17.523 2 12 2zm6.93 6h-3.708A15.945 
-      15.945 0 0 0 12 4.062 8.004 8.004 0 0 1 18.93 8zM12 
-      6.03c.707.94 1.318 2.094 1.77 3.47H10.23c.451-1.376 
-      1.063-2.53 1.77-3.47zM4.07 8A8.004 8.004 0 0 1 12 
-      4.062 15.945 15.945 0 0 0 8.778 8H4.07zm-.91 4c0-.678.07-1.34.2-1.978h4.68A17.978 
-      17.978 0 0 0 8.6 12a17.978 17.978 0 0 0-.56 1.978H3.36A8.046 
-      8.046 0 0 1 3.16 12zm.91 4h4.708A15.945 15.945 0 0 0 12 
-      19.938 8.004 8.004 0 0 1 4.07 16zm7.93 1.97c-.707-.94-1.318-2.094-1.77-3.47h3.54c-.451 
-      1.376-1.063 2.53-1.77 3.47zM15.222 16h4.708A8.004 
-      8.004 0 0 1 12 19.938 15.945 15.945 0 0 0 15.222 16zm1.178-2A17.978 
-      17.978 0 0 0 15.84 12c.06-.66.14-1.326.26-1.978h4.68c.13.638.2 
-      1.3.2 1.978s-.07 1.34-.2 1.978h-4.68zM12 2c-5.523 
-      0-10 4.477-10 10s4.477 10 10 10 
-      10-4.477 10-10S17.523 2 12 2z"/>
-  </svg>
-</a>
-
-<!-- Floating Buttons Styling -->
-<style>
-  .social-button {
-    position: fixed;
-    bottom: 25px;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 9999;
-  }
-
-  .social-button.linkedin {
-    right: 25px;
-    background-color: #0A66C2;
-  }
-
-  .social-button.instagram {
-    right: 90px;
-    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-  }
-
-  .social-button.website {
-    right: 155px;
-    background-color: #0078D7; /* blue web theme */
-  }
-
-  .social-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .social-button svg {
-    width: 26px;
-    height: 26px;
-  }
-
-  @media (max-width: 768px) {
-    .social-button {
-      width: 50px;
-      height: 50px;
-    }
-
-    .social-button.linkedin {
-      right: 20px;
-    }
-
-    .social-button.instagram {
-      right: 80px;
-    }
-
-    .social-button.website {
-      right: 140px;
-    }
-  }
-</style>
-
-
-
-
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script>
-  new WOW().init();
-</script>
-<script src="rohan.js"></script>
+// Nav scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
 
+// Mobile menu
+function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate skill bars when visible
+      const bar = entry.target.querySelector('.skill-bar-fill');
+      if (bar) {
+        setTimeout(() => { bar.style.width = bar.dataset.width; }, 200);
+      }
+    }
+  });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+// Also animate bars for non-reveal skill cards
+document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.width = e.target.dataset.width; obs.disconnect(); }
+    });
+  }, { threshold: 0.3 });
+  obs.observe(bar);
+});
+
+// Smooth active nav
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+});
+</script>
 </body>
 </html>
